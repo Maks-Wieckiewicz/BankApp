@@ -1,17 +1,31 @@
 namespace BankingAppWinForms;
 
+public enum bankAccountType
+
+{
+    standard ,
+    saving
+        
+}
 public class BankAccount
 {
     // jak na moje tutaj powinnismy dodac konstruktor zeby nie tworzyc klas widmo
     public string Name { get; private set; }
     public Guid AccountId { get; private set; }
     public decimal Balance { get; protected set; }
+    
+    public bankAccountType Type { get; protected set; }
+
+    public decimal InterestRate {get; protected set; } 
+    
 
     public BankAccount(string name)
     {
         Name = name;
         AccountId = Guid.NewGuid();
         Balance = 0;
+        Type = bankAccountType.standard;
+        InterestRate = 0;
     }
 
     public virtual void Deposit(decimal amount)

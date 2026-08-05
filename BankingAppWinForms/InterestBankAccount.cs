@@ -2,29 +2,30 @@ namespace BankingAppWinForms;
 
 public class InterestBankAccount : BankAccount
 {
-    public decimal InterestRate { get; private set; }
+    //public decimal InterestRate { get; private set; }
     
-    
-
-    public InterestBankAccount(string name, decimal interests) : base(name + $"(Saving({interests}))")
+    public InterestBankAccount(string name) : base(name)
     {
-        InterestRate = interests;
+        // Interest rate is constant at the first place but bank can change it later 
+        Type = bankAccountType.saving;
+        InterestRate = 2;
     }
-    
-    public override void Deposit(decimal amount)
-    {
-        if (amount < 0)
-        {
-            throw new ArgumentException("Amount cannot be negative");
-        }
 
-        if (amount > 10000)
+    public void CountInterests()
+    {
+        if (Balance > 0)
         {
-            throw new InvalidOperationException("Amount must be less than 10000");
+            decimal InterestAmount = Decimal.Round(((InterestRate / 100) * Balance), 2);
+            Balance += InterestAmount;
         }
         
-        decimal interestAmount = amount  * InterestRate;
-        Balance += amount;
+    }
+    
+    
+    // Public method which allows to change interest rate
+    public void ChangeInterest(decimal new_interest)
+    {
+        InterestRate = new_interest;
     }
     
     

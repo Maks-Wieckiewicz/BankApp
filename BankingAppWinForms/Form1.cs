@@ -19,16 +19,25 @@ public partial class Form1 : Form
             MessageBox.Show("You need to type your name");
             return;
         }
+
+        if (BankAccountTypeCB.SelectedItem == null)
+        {
+            MessageBox.Show("You need to pick a type of your bank account");
+            return;
+        }
         
-        if(InterestsNum.Value != 0)
-            Accounts.Add(new InterestBankAccount(OwnerTxt.Text, InterestsNum.Value));
+        
+        if((string)BankAccountTypeCB.SelectedItem == "Savings Account")
+            Accounts.Add(new InterestBankAccount(OwnerTxt.Text));
+        
         else
             Accounts.Add(new BankAccount(OwnerTxt.Text));
         
         
         RefreshGrid();
         OwnerTxt.Text = string.Empty;
-        InterestsNum.Value = 0;
+        BankAccountTypeCB.SelectedItem = null;
+        
 
     }
 
@@ -109,6 +118,29 @@ public partial class Form1 : Form
         }
         
     }
+
+    
+
+    private void SkipTimebtn_Click(object sender, EventArgs e)
+    {
+        //throw new System.NotImplementedException();
+        if (Accounts.Count > 0)
+        {
+            
+            foreach (var account in Accounts)
+            {
+                if (account is InterestBankAccount savings_account)
+                    savings_account.CountInterests();
+                
+            }
+            
+            
+        }
+        RefreshGrid();
+        
+        
+    }
+    
 }
 
 
