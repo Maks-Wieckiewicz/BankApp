@@ -1,5 +1,5 @@
 namespace BankingApp.API.Models;
-
+using System.ComponentModel.DataAnnotations;
 public enum bankAccountType
 
 {
@@ -11,6 +11,8 @@ public class BankAccount
 {
     // jak na moje tutaj powinnismy dodac konstruktor zeby nie tworzyc klas widmo
     public string Name { get; private set; }
+    
+    [Key]
     public Guid AccountId { get; private set; }
     public decimal Balance { get; protected set; }
     
