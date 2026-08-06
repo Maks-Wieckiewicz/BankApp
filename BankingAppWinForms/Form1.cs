@@ -2,7 +2,7 @@ namespace BankingAppWinForms;
 
 public partial class Form1 : Form
 {
-    List<BankAccount> Accounts = new List<BankAccount>();
+    //List<BankAccount> Accounts = new List<BankAccount>();
 
     public Form1()
     {
@@ -14,7 +14,7 @@ public partial class Form1 : Form
     private void CreateAccountBtn_Click(object sender, EventArgs e)
     {
         
-        if (string.IsNullOrEmpty(OwnerTxt.Text))
+        /*if (string.IsNullOrEmpty(OwnerTxt.Text))
         {
             MessageBox.Show("You need to type your name");
             return;
@@ -36,22 +36,22 @@ public partial class Form1 : Form
         
         RefreshGrid();
         OwnerTxt.Text = string.Empty;
-        BankAccountTypeCB.SelectedItem = null;
+        BankAccountTypeCB.SelectedItem = null;*/
         
 
     }
 
     private void RefreshGrid()
     {
-        BankAccountsGrid.DataSource = null;
-        BankAccountsGrid.DataSource = Accounts;
+        /*BankAccountsGrid.DataSource = null;
+        BankAccountsGrid.DataSource = Accounts;*/
     }
 
 
     private void DepositBtn_Click(object sender, EventArgs e)
     {
         
-     if (BankAccountsGrid.SelectedRows.Count != 1 )
+     /*if (BankAccountsGrid.SelectedRows.Count != 1 )
      {
          MessageBox.Show("You need to select one account");
          return;
@@ -79,13 +79,13 @@ public partial class Form1 : Form
      {
          MessageBox.Show(exception.Message,"Deposit Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
          
-     }
+     }*/
      
      }
     
     private void WithdrawBtn_MouseClick(object sender, MouseEventArgs e)
     {
-        if (BankAccountsGrid.SelectedRows.Count != 1)
+        /*if (BankAccountsGrid.SelectedRows.Count != 1)
         {
             
             MessageBox.Show("You need to select one account");
@@ -115,7 +115,7 @@ public partial class Form1 : Form
         {
             MessageBox.Show(exception.Message,"Withdraw Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             
-        }
+        }*/
         
     }
 
@@ -124,7 +124,7 @@ public partial class Form1 : Form
     private void SkipTimebtn_Click(object sender, EventArgs e)
     {
         //throw new System.NotImplementedException();
-        if (Accounts.Count > 0)
+        /*if (Accounts.Count > 0)
         {
             
             foreach (var account in Accounts)
@@ -136,7 +136,7 @@ public partial class Form1 : Form
             
             
         }
-        RefreshGrid();
+        RefreshGrid();*/
         
         
     }
