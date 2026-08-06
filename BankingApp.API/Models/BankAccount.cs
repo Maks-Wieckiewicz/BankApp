@@ -1,4 +1,4 @@
-namespace BankingAppWinForms;
+namespace BankingApp.API.Models;
 
 public enum bankAccountType
 
