@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using BankingApp.API.Data;
+using BankingApp.API.Services;
+using Scalar.AspNetCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BankDbContext>(options => 
     { options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")); });
 
+builder.Services.AddScoped<IBankAccountsService, BankAccountsService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -18,9 +22,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
+    
 }
-
-app.UseHttpsRedirection();
+//Wypierdalaj mi z tym
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

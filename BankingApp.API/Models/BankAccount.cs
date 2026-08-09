@@ -61,6 +61,13 @@ public class BankAccount
         
         Balance -= amount;
     }
+
+    public void ChangeOwner(string newOwner)
+    {
+        Name = newOwner;
+    }
+    
+    
     
     
     
