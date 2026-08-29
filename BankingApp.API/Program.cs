@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<BankDbContext>(options => 
-    { options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")); });
+    { options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); });
 
 builder.Services.AddScoped<IBankAccountsService, BankAccountsService>();
 
