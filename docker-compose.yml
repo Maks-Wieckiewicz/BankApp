@@ -1,14 +1,10 @@
-version:  "3.8"
+version: "3.8"
 
 services:
   db:
-    image: postgres:15-alpine
+    image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: SecretPassword123!
-      POSTGRES_DB: BankingAppDb
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "SecretPassword123!"
     ports:
-      - "5433:5432"
-      
-        
-    
+      - "1433:1433"
