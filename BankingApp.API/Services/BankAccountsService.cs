@@ -1,8 +1,9 @@
 using BankingApp.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankingApp.API.Services;
 
-public class BankAccountsService : IBankAccountsService
+public class BankAccountsService(DbContext context) : IBankAccountsService
 {
     
     static List<BankAccount> bankAccounts = new List<BankAccount>
@@ -11,6 +12,7 @@ public class BankAccountsService : IBankAccountsService
         new BankAccount("marcin"),
         new BankAccount("michael")
     };
+    
     
     public async Task<List<BankAccount>> GetAllAsync()
         => await Task.FromResult(bankAccounts);
