@@ -10,6 +10,7 @@ public enum bankAccountType
 public class BankAccount
 {
     // jak na moje tutaj powinnismy dodac konstruktor zeby nie tworzyc klas widmo
+    [Required]
     public string Name { get; private set; }
     
     [Key]
@@ -21,11 +22,11 @@ public class BankAccount
     public decimal InterestRate {get; protected set; } 
     
 
-    public BankAccount(string name)
+    public BankAccount(string name, decimal balance = 0)
     {
         Name = name;
         AccountId = Guid.NewGuid();
-        Balance = 0;
+        Balance = balance;
         Type = bankAccountType.standard;
         InterestRate = 0;
     }
@@ -65,6 +66,11 @@ public class BankAccount
     public void ChangeOwner(string newOwner)
     {
         Name = newOwner;
+    }
+
+    public void UpdateName(string newName)
+    {
+        Name = newName;
     }
     
     

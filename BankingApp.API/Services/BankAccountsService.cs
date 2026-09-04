@@ -1,73 +1,74 @@
+using BankingApp.API.Data;
 using BankingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
+using Microsoft.EntityFrameworkCore.Update;
+
 namespace BankingApp.API.Services;
 
-public class BankAccountsService(DbContext context) : IBankAccountsService
+public class BankAccountsService(BankDbContext context) : IBankAccountsService
 {
     
-    static List<BankAccount> bankAccounts = new List<BankAccount>
-    {
-        new BankAccount("maciek") ,
-        new BankAccount("marcin"),
-        new BankAccount("michael")
-    };
-    
-    
+  
+    // Showing all caracters 
     public async Task<List<BankAccount>> GetAllAsync()
-        => await Task.FromResult(bankAccounts);
+    { 
+        var result = await context.BankAccounts.ToListAsync();
+        return result;
+    }
+        
     
     
 
     public async Task<BankAccount?> GetByIdAsync(Guid bankAccountNumber)
     {
 
-        var result = bankAccounts.FirstOrDefault(b => b.AccountId == bankAccountNumber);
-        return await Task.FromResult(result);
-
-        // throw new NotImplementedException();
+        var result =  await context.BankAccounts.Where(c => c.AccountId == bankAccountNumber).FirstOrDefaultAsync();
+        return  result;
     }
 
-    public Task<BankAccount> AddAsync(BankAccount account)
+    
+    //
+    public async Task<BankAccount> AddAsync(BankAccount account)
     {
-        bankAccounts.Add(account);
-        return Task.FromResult(account);
-    }
+        BankAccount new_account = new BankAccount(account.Name, account.Balance);
+        
+         context.BankAccounts.Add(new_account);
+         await context.SaveChangesAsync();
+        
+        return new_account;
 
-    public Task<bool> UpdateAsync(string newOwner, Guid bankAccountNumber)
+    }
+    // Update account
+    public async Task<BankAccount> UpdateAsync(string newOwner, Guid bankAccountNumber)
     {
-        var temp = false;
-        for (var i = 0; i < bankAccounts.Count; i++)
+        
+        // User can only change Name
+        var entity = await context.BankAccounts.FindAsync(bankAccountNumber);
+        
+        if (entity == null)
         {
-            if(bankAccounts[i].AccountId == bankAccountNumber)
-            {
-                temp = true;
-                //account.AccountId = bankAccounts[i].AccountId;
-                // replacing account in a list 
-                
-                bankAccounts[i].ChangeOwner(newOwner);
-                break;
-            }
-            
-                
+            return entity;
         }
-        return Task.FromResult(temp);
         
+        entity.UpdateName(newOwner);
+        await context.SaveChangesAsync();
+        return entity;
         
-        //throw new NotImplementedException();
     }
 
-    public Task<bool> DeleteAsync(Guid bankAccountNumber)
+    public async Task<bool> DeleteAsync(Guid bankAccountNumber)
     {
-        var accountToRemove = bankAccounts.FirstOrDefault(b => b.AccountId == bankAccountNumber);
-
+        var accountToRemove = await context.BankAccounts.Where(b => b.AccountId == bankAccountNumber).FirstOrDefaultAsync();
+        
         if (accountToRemove == null)
         {
-            return Task.FromResult(false);
+            return false;
         }
-        bankAccounts.Remove(accountToRemove);
+        context.BankAccounts.Remove(accountToRemove);
+        await context.SaveChangesAsync();
         
-        return Task.FromResult(true);
-        
+        return true;
+         
     }
 }
