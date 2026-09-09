@@ -12,20 +12,36 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
     
   
     // Showing all caracters 
-    public async Task<List<BankAccount>> GetAllAsync()
+    public async Task<List<BankAccountResponse>> GetAllAsync()
     { 
         var result = await context.BankAccounts.ToListAsync();
-        return result;
+        
+        var DTO_list = result.Select(account => new BankAccountResponse
+            {
+                AccountId = account.AccountId,
+                Balance = account.Balance, 
+                Type = account.Type
+            }
+        ).ToList();
+        
+        return DTO_list;
     }
         
     
     
 
-    public async Task<BankAccount?> GetByIdAsync(Guid bankAccountNumber)
+    public async Task<BankAccountResponse?> GetByIdAsync(Guid bankAccountNumber)
     {
 
         var result =  await context.BankAccounts.Where(c => c.AccountId == bankAccountNumber).FirstOrDefaultAsync();
-        return  result;
+        var response = new BankAccountResponse
+        {
+            AccountId = result.AccountId,
+            Balance = result.Balance,
+            Type = result.Type
+        };
+            
+        return  response;
     }
 
     
@@ -34,7 +50,7 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
     {
         BankAccount new_account;
 
-        if (request.Type == AccountType.standard)
+        if (request.Type == bankAccountType.standard)
         {
              new_account = new BankAccount(request.Name, request.InitialDeposit);
         }
@@ -52,26 +68,7 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
         return new_account;
 
     }
-    // Update account
-    
-    /*
-     public async Task<BankAccount> UpdateAsync(string newOwner, Guid bankAccountNumber)
-    {
-        
-        // User can only change Name
-        var entity = await context.BankAccounts.FindAsync(bankAccountNumber);
-        
-        if (entity == null)
-        {
-            return entity;
-        }
-        
-        entity.UpdateName(newOwner);
-        await context.SaveChangesAsync();
-        return entity;
-        
-    }
-     */
+  
     
 
     public async Task<bool> DeleteAsync(Guid bankAccountNumber)

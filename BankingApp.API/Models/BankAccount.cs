@@ -1,3 +1,5 @@
+using BankingApp.API.DTO;
+
 namespace BankingApp.API.Models;
 using System.ComponentModel.DataAnnotations;
 public enum bankAccountType

@@ -9,8 +9,8 @@ public interface IBankAccountsService
     
     // Implementing Crud here
     
-    Task<List<BankAccount>> GetAllAsync();
-    Task<BankAccount?> GetByIdAsync(Guid bankAccountNumber);
+    Task<List<BankAccountResponse>> GetAllAsync();
+    Task<BankAccountResponse?> GetByIdAsync(Guid bankAccountNumber);
     Task<BankAccount> AddAsync(CreateBankAccountRequest request);
     
     //return updated bank account

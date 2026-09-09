@@ -15,7 +15,7 @@ public class AccountsController(IBankAccountsService service) : ControllerBase
     
     [HttpGet]
     [EndpointSummary("Get all accounts")]
-    public async Task< ActionResult <List <BankAccount>>> GetAllAsync()
+    public async Task< ActionResult <List <BankAccountResponse>>> GetAllAsync()
     {
         var accounts = await service.GetAllAsync();
         return Ok(accounts);
@@ -23,7 +23,7 @@ public class AccountsController(IBankAccountsService service) : ControllerBase
 
     [HttpGet("{bankAccountNumber}")]
     [EndpointSummary("Getting bank account by bank account number")]
-    public async Task<ActionResult<BankAccount>> GetBankAccountById(Guid bankAccountNumber)
+    public async Task<ActionResult<BankAccountResponse>> GetBankAccountById(Guid bankAccountNumber)
     {
         var bankAccount = await service.GetByIdAsync(bankAccountNumber);
         if (bankAccount == null)
