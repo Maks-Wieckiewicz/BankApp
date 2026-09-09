@@ -4,7 +4,7 @@ public class InterestBankAccount : BankAccount
 {
     //public decimal InterestRate { get; private set; }
     
-    public InterestBankAccount(string name) : base(name)
+    public InterestBankAccount(string name, decimal balance = 0) : base(name, balance)
     {
         // Interest rate is constant at the first place but bank can change it later 
         Type = bankAccountType.saving;

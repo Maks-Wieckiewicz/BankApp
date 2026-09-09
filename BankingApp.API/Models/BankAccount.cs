@@ -11,7 +11,7 @@ public class BankAccount
 {
     // jak na moje tutaj powinnismy dodac konstruktor zeby nie tworzyc klas widmo
     [Required]
-    public string Name { get; private set; }
+    public string Name { get; init; }
     
     [Key]
     public Guid AccountId { get; private set; }
@@ -63,16 +63,7 @@ public class BankAccount
         Balance -= amount;
     }
 
-    public void ChangeOwner(string newOwner)
-    {
-        Name = newOwner;
-    }
 
-    public void UpdateName(string newName)
-    {
-        Name = newName;
-    }
-    
     
     
     

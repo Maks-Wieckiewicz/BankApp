@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using BankingApp.API.Models;
 using BankingApp.API.Services;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using BankingApp.API.DTO;
 
 namespace BankingApp.API.Controllers;
 
@@ -16,7 +17,8 @@ public class AccountsController(IBankAccountsService service) : ControllerBase
     [EndpointSummary("Get all accounts")]
     public async Task< ActionResult <List <BankAccount>>> GetAllAsync()
     {
-        return  await Task.FromResult(Ok(service.GetAllAsync())) ;
+        var accounts = await service.GetAllAsync();
+        return Ok(accounts);
     }
 
     [HttpGet("{bankAccountNumber}")]
@@ -34,35 +36,20 @@ public class AccountsController(IBankAccountsService service) : ControllerBase
 
     [HttpPost]
     [EndpointSummary("Adding new account")]
-    public async Task<ActionResult<BankAccount>> AddAsync(BankAccount account)
+    public async Task<ActionResult<BankAccount>> AddAsync(CreateBankAccountRequest request)
     {
-        if (account == null)
+        
+        
+        if (request == null)
         {
             return BadRequest();
         }
         
-        var createdAccount = await service.AddAsync(account);
-        return CreatedAtAction(nameof(GetBankAccountById), new{bankAccountNumber = createdAccount.AccountId},  account);
+        var createdAccount = await service.AddAsync(request);
+        return CreatedAtAction(nameof(GetBankAccountById), new{bankAccountNumber = createdAccount.AccountId},  createdAccount);
     }
-    // Implement upadate method
-    [HttpPut("{bankAccountNumber}")]
-    [EndpointSummary("Updating bank account")]
-    public async Task<ActionResult> UpdateAsync(Guid bankAccountNumber, [FromBody] string newOwner)
-    {
-        if (string.IsNullOrEmpty(newOwner))
-        {
-            return BadRequest("New owner is required");
-        }
-        
-        var isUpdated = await service.UpdateAsync(newOwner, bankAccountNumber);
-        if (!isUpdated)
-        {
-            return NotFound();
-        }
-        
-        return NoContent();
-        
-    }
+  
+    
 
     [HttpDelete("{bankAccountNumber}")]
     [EndpointSummary("Deleting bank account")]

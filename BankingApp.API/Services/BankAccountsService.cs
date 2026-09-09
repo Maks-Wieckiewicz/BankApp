@@ -1,4 +1,5 @@
 using BankingApp.API.Data;
+using BankingApp.API.DTO;
 using BankingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,9 +30,21 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
 
     
     //
-    public async Task<BankAccount> AddAsync(BankAccount account)
+    public async Task<BankAccount> AddAsync(CreateBankAccountRequest request)
     {
-        BankAccount new_account = new BankAccount(account.Name, account.Balance);
+        BankAccount new_account;
+
+        if (request.Type == AccountType.standard)
+        {
+             new_account = new BankAccount(request.Name, request.InitialDeposit);
+        }
+        
+        else
+        {
+             new_account = new InterestBankAccount(request.Name, request.InitialDeposit);
+            
+        }
+        
         
          context.BankAccounts.Add(new_account);
          await context.SaveChangesAsync();
@@ -40,7 +53,9 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
 
     }
     // Update account
-    public async Task<BankAccount> UpdateAsync(string newOwner, Guid bankAccountNumber)
+    
+    /*
+     public async Task<BankAccount> UpdateAsync(string newOwner, Guid bankAccountNumber)
     {
         
         // User can only change Name
@@ -56,6 +71,8 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
         return entity;
         
     }
+     */
+    
 
     public async Task<bool> DeleteAsync(Guid bankAccountNumber)
     {
