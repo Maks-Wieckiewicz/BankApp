@@ -18,6 +18,7 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
         
         var DTO_list = result.Select(account => new BankAccountResponse
             {
+                Name = account.Name,
                 AccountId = account.AccountId,
                 Balance = account.Balance, 
                 Type = account.Type
@@ -36,6 +37,7 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
         var result =  await context.BankAccounts.Where(c => c.AccountId == bankAccountNumber).FirstOrDefaultAsync();
         var response = new BankAccountResponse
         {
+            Name = result.Name,
             AccountId = result.AccountId,
             Balance = result.Balance,
             Type = result.Type
