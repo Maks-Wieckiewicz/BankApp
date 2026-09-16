@@ -27,6 +27,45 @@ public class TransfersService(BankDbContext context) : ITransfersService
         
         return true;
     }
-    
-    
+
+  
+
+    public async Task<bool> DepositAsync(CreateMoneyRequest request)
+    {
+        
+        var account = await context.BankAccounts.FirstOrDefaultAsync(a => a.AccountId == request.BankAccountNumber);
+
+        if (account == null)
+        {
+            return false;
+            
+        }
+        account.Deposit(request.Amount);
+        await context.SaveChangesAsync();
+
+        return true;
+        
+    }
+
+    public async Task<bool> WithdrawAsync(CreateMoneyRequest request)
+    {
+        var account = await context.BankAccounts.FirstOrDefaultAsync(a => a.AccountId == request.BankAccountNumber);
+
+        if (account == null)
+        {
+            throw new Exception("Account not found");
+        }
+
+        if (account.Balance < request.Amount)
+        {
+            return false;
+        }
+        
+        account.Withdraw(request.Amount);
+        await context.SaveChangesAsync();
+        
+        return true;
+        
+        
+    }
 }

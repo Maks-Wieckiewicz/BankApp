@@ -23,7 +23,34 @@ public class TransfersController(ITransfersService service) : ControllerBase
         }
         return Ok();
     }
-    
-    
-    
+
+    [HttpPost]
+    [EndpointSummary("Deposit credit")]
+    public async Task<ActionResult> DepositAsync(CreateTransferRequest request)
+    {
+        var isTransfer = await service.TransferAsync(request);
+
+        if (!isTransfer)
+        {
+            return NotFound("Account not found");
+        }
+        return Ok("Money successfully transferred");
+    }
+
+    [HttpPost]
+    [EndpointSummary("Withdraw credit")]
+    public async Task<ActionResult> WithdrawAsync(CreateTransferRequest request)
+    {
+        var isTransfer = await service.TransferAsync(request);
+        if (!isTransfer)
+        {
+            return BadRequest("Not enough money ");
+        }
+        
+        return Ok("Money successfully transferred");
+        
+    }
+
+
+
 }
