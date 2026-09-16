@@ -4,14 +4,14 @@ using BankingApp.API.Services;
 namespace BankingApp.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
-
-[Route("api/[controller]")]
 [ApiController]
+[Route("api/[controller]")]
+
 
 public class TransfersController(ITransfersService service) : ControllerBase
 {
     
-    [HttpPost]
+    [HttpPost("transfer")]
     [EndpointSummary("Transfer money")]
     public async Task< ActionResult > TransfersAsync(CreateTransferRequest request)
     {
@@ -24,11 +24,11 @@ public class TransfersController(ITransfersService service) : ControllerBase
         return Ok();
     }
 
-    [HttpPost]
+    [HttpPost("deposit")]
     [EndpointSummary("Deposit credit")]
-    public async Task<ActionResult> DepositAsync(CreateTransferRequest request)
+    public async Task<ActionResult> DepositAsync(CreateMoneyRequest request)
     {
-        var isTransfer = await service.TransferAsync(request);
+        var isTransfer = await service.DepositAsync(request);
 
         if (!isTransfer)
         {
@@ -37,11 +37,11 @@ public class TransfersController(ITransfersService service) : ControllerBase
         return Ok("Money successfully transferred");
     }
 
-    [HttpPost]
+    [HttpPost("withdraw")]
     [EndpointSummary("Withdraw credit")]
-    public async Task<ActionResult> WithdrawAsync(CreateTransferRequest request)
+    public async Task<ActionResult> WithdrawAsync(CreateMoneyRequest request)
     {
-        var isTransfer = await service.TransferAsync(request);
+        var isTransfer = await service.WithdrawAsync(request);
         if (!isTransfer)
         {
             return BadRequest("Not enough money ");
