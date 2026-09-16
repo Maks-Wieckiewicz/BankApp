@@ -10,4 +10,5 @@ public class BankDbContext : DbContext
     }
 
     public DbSet<BankAccount> BankAccounts { get; set;}
+    public DbSet<InterestBankAccount> InterestBankAccounts { get; set;}
 }

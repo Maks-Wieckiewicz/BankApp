@@ -3,17 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BankingApp.API.Controllers;
 
-[Route("api/[controller]")]
+
 [ApiController]
+[Route("api/[controller]")]
 
 public class ActionController(ISkipTime service) : ControllerBase
 {
 
-    [HttpPost]
+    [HttpPost("add-interests")]
     [EndpointSummary("Skip time and add interests")]
     public async Task<IActionResult> SkipTimeAsync()
     {
-        await service.SkipTimeAsync();
+        var result = await service.SkipTimeAsync();
+        if (!result)
+        {
+            return NotFound("Account not found");
+        }
+        
         return Ok();
         
     }

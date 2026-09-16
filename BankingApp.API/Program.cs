@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IBankAccountsService, BankAccountsService>();
 builder.Services.AddScoped<ITransfersService, TransfersService>();
+builder.Services.AddScoped<ISkipTime, SkipTimeService>();
 
 builder.Services.AddDbContext<BankDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddControllers().AddJsonOptions(options =>
