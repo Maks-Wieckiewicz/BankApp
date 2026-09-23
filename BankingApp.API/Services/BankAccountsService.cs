@@ -1,7 +1,7 @@
 using BankingApp.API.Data;
-using BankingApp.API.DTO;
 using BankingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
+using Shared.DTOs;
 
 
 using Microsoft.EntityFrameworkCore.Update;

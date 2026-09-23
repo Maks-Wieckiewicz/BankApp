@@ -1,4 +1,4 @@
-using BankingApp.API.DTO;
+using Shared.DTOs;
 using BankingApp.API.Services;
 
 namespace BankingApp.API.Controllers;

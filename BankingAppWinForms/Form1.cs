@@ -1,12 +1,19 @@
-using BankingApp.API.DTO;
+using System.Data.SqlTypes;
 using Shared.Enums;
+using System.Net.Http.Json;
+using Shared.DTOs;
 
 namespace BankingAppWinForms;
-using Shared.DTOs;
+
 
 public partial class Form1 : Form
 {
-    //List<BankAccount> Accounts = new List<BankAccount>();
+    private static readonly HttpClient _httpClient = new HttpClient
+    {
+        BaseAddress = new Uri("http://localhost:5158/")
+    };
+    
+   
 
     public Form1()
     {
@@ -49,10 +56,12 @@ public partial class Form1 : Form
 
     }
 
-    private void RefreshGrid()
+    private async void RefreshGrid()
     {
         BankAccountsGrid.DataSource = null;
+        
         // Need connection with data base
+        var Accounts = await _httpClient.GetFromJsonAsync<List<BankAccountResponse> >("api/BankAccounts");
         BankAccountsGrid.DataSource = Accounts;
     }
 
@@ -65,30 +74,29 @@ public partial class Form1 : Form
          MessageBox.Show("You need to select one account");
          return;
      }
-     
-     BankAccount seleceted_account = BankAccountsGrid.SelectedRows[0].DataBoundItem as BankAccount;
 
-     if (seleceted_account == null)
+     if (BankAccountsGrid.CurrentRow != null)
      {
-         MessageBox.Show("Reading Failed");
-         return;
+         var selectedAccount = (BankAccountResponse)BankAccountsGrid.CurrentRow.DataBoundItem;
+         
+         Guid accountId = selectedAccount.AccountId;
+         //decimal currentBalance = selectedAccount.Balance;
+
+         var inputValue = AmountNum.Value;
+         
+        CreateMoneyRequest newDeposit = new CreateMoneyRequest();
+
+        newDeposit.BankAccountNumber = accountId;
+        newDeposit.Amount = (int)inputValue;
+
+
+
      }
+     
+     
      
     
-     try
-     {
-         seleceted_account.Deposit(AmountNum.Value);
-         RefreshGrid();
-         AmountNum.Value = 0;
-         MessageBox.Show("Deposited Successfully");
-
-
-     }
-     catch (Exception exception)
-     {
-         MessageBox.Show(exception.Message,"Deposit Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-         
-     }
+     
      
      }
     

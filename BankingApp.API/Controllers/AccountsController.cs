@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using BankingApp.API.Models;
 using BankingApp.API.Services;
+using Shared.DTOs;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using BankingApp.API.DTO;
+
 
 namespace BankingApp.API.Controllers;
 

@@ -1,4 +1,4 @@
-using BankingApp.API.DTO;
+using Shared.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankingApp.API.Services;

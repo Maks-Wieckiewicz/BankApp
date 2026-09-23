@@ -1,5 +1,5 @@
-using BankingApp.API.DTO;
-using Shared;
+
+using Shared.DTOs;
 using Shared.Enums;
 
 namespace BankingApp.API.Models;

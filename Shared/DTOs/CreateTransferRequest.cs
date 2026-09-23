@@ -1,4 +1,4 @@
-namespace BankingApp.API.DTO;
+namespace Shared.DTOs;
 
 public class CreateTransferRequest
 {

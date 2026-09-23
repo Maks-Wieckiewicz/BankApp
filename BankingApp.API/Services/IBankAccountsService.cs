@@ -1,6 +1,6 @@
 using BankingApp.API.Models;
 using BankingApp.API.Data;
-using BankingApp.API.DTO;
+using Shared.DTOs;
 
 namespace BankingApp.API.Services;
 
