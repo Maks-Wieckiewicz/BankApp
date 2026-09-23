@@ -77,9 +77,9 @@ public partial class Form1 : Form
 
      if (BankAccountsGrid.CurrentRow != null)
      {
-         var selectedAccount = (BankAccountResponse)BankAccountsGrid.CurrentRow.DataBoundItem;
+         var selectedAccount = (CreateMoneyRequest)BankAccountsGrid.CurrentRow.DataBoundItem;
          
-         Guid accountId = selectedAccount.AccountId;
+         Guid accountId = selectedAccount.BankAccountNumber;
          //decimal currentBalance = selectedAccount.Balance;
 
          var inputValue = AmountNum.Value;
@@ -87,10 +87,10 @@ public partial class Form1 : Form
         CreateMoneyRequest newDeposit = new CreateMoneyRequest();
 
         newDeposit.BankAccountNumber = accountId;
-        newDeposit.Amount = (int)inputValue;
+        newDeposit.Amount = inputValue;
 
 
-
+        RefreshGrid();
      }
      
      
@@ -102,7 +102,7 @@ public partial class Form1 : Form
     
     private void WithdrawBtn_MouseClick(object sender, MouseEventArgs e)
     {
-        /*if (BankAccountsGrid.SelectedRows.Count != 1)
+        if (BankAccountsGrid.SelectedRows.Count != 1)
         {
             
             MessageBox.Show("You need to select one account");
@@ -110,29 +110,25 @@ public partial class Form1 : Form
             
         }
         
-        BankAccount selected_account = BankAccountsGrid.SelectedRows[0].DataBoundItem as BankAccount;
+        if (BankAccountsGrid.CurrentRow != null)
+        {
+            var selectedAccount = (CreateMoneyRequest)BankAccountsGrid.CurrentRow.DataBoundItem;
+         
+            Guid accountId = selectedAccount.BankAccountNumber;
+            
 
-        if (selected_account == null)
-        {
-            
-            MessageBox.Show("Reading Failed");
-            return;
+            var inputValue = AmountNum.Value;
+         
+            CreateMoneyRequest newDeposit = new CreateMoneyRequest();
+
+            newDeposit.BankAccountNumber = accountId;
+            newDeposit.Amount = inputValue;
+
+
+
         }
         
-        try
-        {
-            selected_account.Withdraw(AmountNum.Value);
-        
-            RefreshGrid();
-            AmountNum.Value = 0;
-            MessageBox.Show("Withdrawn Successfully");
-        }
-    
-        catch (Exception exception)
-        {
-            MessageBox.Show(exception.Message,"Withdraw Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
-        }*/
+        RefreshGrid();
         
     }
 
@@ -140,6 +136,10 @@ public partial class Form1 : Form
 
     private void SkipTimebtn_Click(object sender, EventArgs e)
     {
+        
+        // Nothing to send 
+        // Just relode the grid
+        
         //throw new System.NotImplementedException();
         /*if (Accounts.Count > 0)
         {
@@ -155,7 +155,69 @@ public partial class Form1 : Form
         }
         RefreshGrid();*/
         
+        RefreshGrid();
+    }
+    private Guid? _sourceAccountId = null;
+    private Guid? _targetAccountId = null;
+
+    private void SenderBtn_Click(object sender, EventArgs e)
+    {
+        if (BankAccountsGrid.SelectedRows.Count != 1 )
+        {
+            MessageBox.Show("You need to select one account");
+            return;
+        }
+        
+        if (BankAccountsGrid.CurrentRow != null)
+        {
+            var selectedAccount = (BankAccountResponse)BankAccountsGrid.CurrentRow.DataBoundItem;
+         
+            _sourceAccountId = selectedAccount.AccountId;
+            
+
+            MessageBox.Show($"Sender: {selectedAccount.Name} ({selectedAccount.AccountId})");
+
+        }
         
     }
     
+    private void ReciverBtn_Click(object sender, EventArgs e)
+    {
+        if (BankAccountsGrid.SelectedRows.Count != 1 )
+        {
+            MessageBox.Show("You need to select one account");
+            return;
+        }
+        
+        if (BankAccountsGrid.CurrentRow != null)
+        {
+            var selectedAccount = (BankAccountResponse)BankAccountsGrid.CurrentRow.DataBoundItem;
+         
+            _targetAccountId = selectedAccount.AccountId;
+            
+
+            MessageBox.Show($"Receiver: {selectedAccount.Name} ({selectedAccount.AccountId})");
+
+        }
+    }
+    
+    
+    
+    private void TransferBtn_Click(object sender, EventArgs e)
+    {
+        if (_sourceAccountId != null && _targetAccountId != null)
+        {
+            CreateTransferRequest newTransfer = new CreateTransferRequest();
+            var Amount = AmountNum.Value;
+            
+            newTransfer.TransferFrom = _sourceAccountId;
+            newTransfer.TransferTo = _targetAccountId;
+            newTransfer.Amount = Amount;
+            
+        }
+        
+    }
+
+
+
 }

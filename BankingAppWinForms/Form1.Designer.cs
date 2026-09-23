@@ -43,6 +43,8 @@ partial class Form1
         BankAccountTypeCB = new System.Windows.Forms.ComboBox();
         SkipTimebtn = new System.Windows.Forms.Button();
         TransferBtn = new System.Windows.Forms.Button();
+        SenderBtn = new System.Windows.Forms.Button();
+        ReciverBtn = new System.Windows.Forms.Button();
         ((System.ComponentModel.ISupportInitialize)AmountNum).BeginInit();
         ((System.ComponentModel.ISupportInitialize)BankAccountsGrid).BeginInit();
         SuspendLayout();
@@ -157,12 +159,35 @@ partial class Form1
         TransferBtn.TabIndex = 13;
         TransferBtn.Text = "Transfer";
         TransferBtn.UseVisualStyleBackColor = true;
+        TransferBtn.Click += TransferBtn_Click;
+        // 
+        // SenderBtn
+        // 
+        SenderBtn.Location = new System.Drawing.Point(876, 51);
+        SenderBtn.Name = "SenderBtn";
+        SenderBtn.Size = new System.Drawing.Size(231, 71);
+        SenderBtn.TabIndex = 14;
+        SenderBtn.Text = "Set a Sender";
+        SenderBtn.UseVisualStyleBackColor = true;
+        SenderBtn.Click += SenderBtn_Click;
+        // 
+        // ReciverBtn
+        // 
+        ReciverBtn.Location = new System.Drawing.Point(879, 201);
+        ReciverBtn.Name = "ReciverBtn";
+        ReciverBtn.Size = new System.Drawing.Size(228, 67);
+        ReciverBtn.TabIndex = 15;
+        ReciverBtn.Text = "Set a Reciver";
+        ReciverBtn.UseVisualStyleBackColor = true;
+        ReciverBtn.Click += ReciverBtn_Click;
         // 
         // Form1
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(844, 487);
+        ClientSize = new System.Drawing.Size(1116, 487);
+        Controls.Add(ReciverBtn);
+        Controls.Add(SenderBtn);
         Controls.Add(TransferBtn);
         Controls.Add(SkipTimebtn);
         Controls.Add(BankAccountTypeCB);
@@ -181,6 +206,9 @@ partial class Form1
         ResumeLayout(false);
         PerformLayout();
     }
+
+    private System.Windows.Forms.Button SenderBtn;
+    private System.Windows.Forms.Button ReciverBtn;
 
     private System.Windows.Forms.Button TransferBtn;
 
