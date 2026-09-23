@@ -1,3 +1,5 @@
+using Shared.Enums;
+
 namespace BankingApp.API.Models;
 
 public class InterestBankAccount : BankAccount
@@ -7,7 +9,7 @@ public class InterestBankAccount : BankAccount
     public InterestBankAccount(string name, decimal balance = 0) : base(name, balance)
     {
         // Interest rate is constant at the first place but bank can change it later 
-        Type = bankAccountType.saving;
+        Type = AccountType.Saving;
         InterestRate = 2;
     }
 

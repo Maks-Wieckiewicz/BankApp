@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
-using BankingApp.API.Models;
+using Shared.Enums;
+
 
 namespace BankingApp.API.DTO;
 
@@ -10,7 +11,7 @@ public class CreateBankAccountRequest
     [Required]
     public string Name { get; set; }
     public decimal InitialDeposit { get; set; }
-    public bankAccountType Type {get; set; }
+    public AccountType Type {get; set; }
     
     
 }

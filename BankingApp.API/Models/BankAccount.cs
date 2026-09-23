@@ -1,14 +1,10 @@
 using BankingApp.API.DTO;
+using Shared;
+using Shared.Enums;
 
 namespace BankingApp.API.Models;
 using System.ComponentModel.DataAnnotations;
-public enum bankAccountType
 
-{
-    standard ,
-    saving
-        
-}
 public class BankAccount
 {
     // jak na moje tutaj powinnismy dodac konstruktor zeby nie tworzyc klas widmo
@@ -19,7 +15,7 @@ public class BankAccount
     public Guid AccountId { get; private set; }
     public decimal Balance { get; protected set; }
     
-    public bankAccountType Type { get; protected set; }
+    public AccountType Type { get; protected set; }
 
     public decimal InterestRate {get; protected set; } 
     
@@ -29,7 +25,7 @@ public class BankAccount
         Name = name;
         AccountId = Guid.NewGuid();
         Balance = balance;
-        Type = bankAccountType.standard;
+        Type = AccountType.Standard;
         InterestRate = 0;
     }
 

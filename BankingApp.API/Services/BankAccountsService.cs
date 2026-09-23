@@ -3,7 +3,9 @@ using BankingApp.API.DTO;
 using BankingApp.API.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 using Microsoft.EntityFrameworkCore.Update;
+using Shared.Enums;
 
 namespace BankingApp.API.Services;
 
@@ -52,7 +54,7 @@ public class BankAccountsService(BankDbContext context) : IBankAccountsService
     {
         BankAccount new_account;
 
-        if (request.Type == bankAccountType.standard)
+        if (request.Type == AccountType.Standard)
         {
              new_account = new BankAccount(request.Name, request.InitialDeposit);
         }
