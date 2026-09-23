@@ -1,4 +1,8 @@
+using BankingApp.API.DTO;
+using Shared.Enums;
+
 namespace BankingAppWinForms;
+using Shared.DTOs;
 
 public partial class Form1 : Form
 {
@@ -14,7 +18,7 @@ public partial class Form1 : Form
     private void CreateAccountBtn_Click(object sender, EventArgs e)
     {
         
-        /*if (string.IsNullOrEmpty(OwnerTxt.Text))
+        if (string.IsNullOrEmpty(OwnerTxt.Text))
         {
             MessageBox.Show("You need to type your name");
             return;
@@ -25,33 +29,38 @@ public partial class Form1 : Form
             MessageBox.Show("You need to pick a type of your bank account");
             return;
         }
+        CreateBankAccountRequest newUser = new CreateBankAccountRequest();
         
+        // adding name to DTO
+        newUser.Name = OwnerTxt.Text;
+        newUser.InitialDeposit = 0;
         
         if((string)BankAccountTypeCB.SelectedItem == "Savings Account")
-            Accounts.Add(new InterestBankAccount(OwnerTxt.Text));
+            newUser.Type = AccountType.Saving;
         
         else
-            Accounts.Add(new BankAccount(OwnerTxt.Text));
+            newUser.Type = AccountType.Standard;
         
         
         RefreshGrid();
         OwnerTxt.Text = string.Empty;
-        BankAccountTypeCB.SelectedItem = null;*/
+        BankAccountTypeCB.SelectedItem = null;
         
 
     }
 
     private void RefreshGrid()
     {
-        /*BankAccountsGrid.DataSource = null;
-        BankAccountsGrid.DataSource = Accounts;*/
+        BankAccountsGrid.DataSource = null;
+        // Need connection with data base
+        BankAccountsGrid.DataSource = Accounts;
     }
 
 
     private void DepositBtn_Click(object sender, EventArgs e)
     {
         
-     /*if (BankAccountsGrid.SelectedRows.Count != 1 )
+     if (BankAccountsGrid.SelectedRows.Count != 1 )
      {
          MessageBox.Show("You need to select one account");
          return;
@@ -79,7 +88,7 @@ public partial class Form1 : Form
      {
          MessageBox.Show(exception.Message,"Deposit Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
          
-     }*/
+     }
      
      }
     

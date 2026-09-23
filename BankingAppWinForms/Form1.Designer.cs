@@ -42,6 +42,7 @@ partial class Form1
         label4 = new System.Windows.Forms.Label();
         BankAccountTypeCB = new System.Windows.Forms.ComboBox();
         SkipTimebtn = new System.Windows.Forms.Button();
+        TransferBtn = new System.Windows.Forms.Button();
         ((System.ComponentModel.ISupportInitialize)AmountNum).BeginInit();
         ((System.ComponentModel.ISupportInitialize)BankAccountsGrid).BeginInit();
         SuspendLayout();
@@ -144,15 +145,25 @@ partial class Form1
         SkipTimebtn.Name = "SkipTimebtn";
         SkipTimebtn.Size = new System.Drawing.Size(258, 52);
         SkipTimebtn.TabIndex = 12;
-        SkipTimebtn.Text = "Skip Time";
+        SkipTimebtn.Text = "Count Interests";
         SkipTimebtn.UseVisualStyleBackColor = true;
         SkipTimebtn.Click += SkipTimebtn_Click;
+        // 
+        // TransferBtn
+        // 
+        TransferBtn.Location = new System.Drawing.Point(440, 421);
+        TransferBtn.Name = "TransferBtn";
+        TransferBtn.Size = new System.Drawing.Size(338, 54);
+        TransferBtn.TabIndex = 13;
+        TransferBtn.Text = "Transfer";
+        TransferBtn.UseVisualStyleBackColor = true;
         // 
         // Form1
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(844, 455);
+        ClientSize = new System.Drawing.Size(844, 487);
+        Controls.Add(TransferBtn);
         Controls.Add(SkipTimebtn);
         Controls.Add(BankAccountTypeCB);
         Controls.Add(label4);
@@ -170,6 +181,8 @@ partial class Form1
         ResumeLayout(false);
         PerformLayout();
     }
+
+    private System.Windows.Forms.Button TransferBtn;
 
     private System.Windows.Forms.Button SkipTimebtn;
 
